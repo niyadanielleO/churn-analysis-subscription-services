@@ -1,4 +1,4 @@
-# 🔐 Pourquoi les abonnés partent — et lesquels retenir en premier
+# 🔐 Pourquoi les abonnés partent et lesquels retenir en premier
 
 > Analyse du churn d'une base de 7 043 abonnés à des services numériques (connectivité, sécurité en ligne, sauvegarde, support technique). Objectif : identifier les profils à risque, chiffrer le revenu menacé et prioriser un plan de rétention.
 
