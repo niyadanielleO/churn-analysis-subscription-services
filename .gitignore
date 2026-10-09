@@ -1,0 +1,8 @@
+# Données sources (non versionnées)
+data/*.csv
+data/*.xlsx
+
+# Fichiers temporaires
+.ipynb_checkpoints/
+~$*
+.DS_Store
