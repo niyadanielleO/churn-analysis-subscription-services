@@ -32,7 +32,7 @@ Sous-questions :
 | Volume | 7 043 clients × 21 colonnes |
 | Variables clés | `tenure` (ancienneté en mois), `Contract`, `PaymentMethod`, `OnlineSecurity`, `TechSupport`, `MonthlyCharges`, `TotalCharges`, `Churn` |
 
-À noter : le fichier CSV n'est pas versionné dans ce dépôt (licence Kaggle) : le télécharger et le placer dans `data/`.
+À noter : Les données ne sont pas incluses dans ce dépôt. Pour reproduire l’analyse, téléchargez le fichier sur Kaggle et placez-le dans le dossier data/.
 
 ## 4. Méthodologie
 
