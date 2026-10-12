@@ -1,8 +1,8 @@
-# 🔐 Pourquoi les abonnés partent — et lesquels retenir en premier
+# Pourquoi les abonnés partent — et lesquels retenir en premier
 
 > Analyse du churn d'une base de 7 043 abonnés à des services numériques (connectivité, sécurité en ligne, sauvegarde, support technique). Objectif : identifier les profils à risque, chiffrer le revenu menacé et prioriser un plan de rétention.
 
-![Statut](https://img.shields.io/badge/statut-en%20cours-yellow) ![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?logo=powerbi&logoColor=black) ![SQL](https://img.shields.io/badge/SQL-336791?logo=postgresql&logoColor=white) ![Python](https://img.shields.io/badge/Python-pandas-3776AB?logo=python&logoColor=white)
+**Outils :** SQL (SQLite, DB Browser for SQLite)
 
 ---
 
@@ -32,25 +32,22 @@ Sous-questions :
 | Volume | 7 043 clients × 21 colonnes |
 | Variables clés | `tenure` (ancienneté en mois), `Contract`, `PaymentMethod`, `OnlineSecurity`, `TechSupport`, `MonthlyCharges`, `TotalCharges`, `Churn` |
 
-⚠️ Le fichier CSV n'est pas versionné dans ce dépôt (licence Kaggle) : le télécharger et le placer dans `data/`.
+À noter : le fichier CSV n'est pas versionné dans ce dépôt (licence Kaggle) : le télécharger et le placer dans `data/`.
 
 ## 4. Méthodologie
 
-| Étape | Ce que je fais | Outil principal | Alternative |
-|---|---|---|---|
-| 1. Import | Chargement du CSV | Power Query | Python (pandas) |
-| 2. Nettoyage | `TotalCharges` en texte → nombre ; 11 lignes vides (clients à 0 mois d'ancienneté) | Power Query | Python |
-| 3. Enrichissement | Tranches d'ancienneté (0-6, 7-12, 13-24, 25-48, 49+ mois), nombre d'options de sécurité, churn en 0/1 | Colonnes calculées / SQL `CASE WHEN` | Python |
-| 4. Analyse exploratoire | Taux de churn par contrat, ancienneté, paiement, options | SQL (`sql/churn_queries.sql`) | Python (notebook) |
-| 5. Revenu à risque | MRR perdu et MRR des segments les plus exposés | Mesures DAX (`powerbi/mesures_dax.md`) | SQL |
-| 6. Restitution | Dashboard 2 pages : vue d'ensemble + segments à risque | Power BI | Graphiques Python |
+| Étape | Ce qui est fait | Requête (`sql/churn_queries.sql`) |
+|---|---|---|
+| 1. Import et contrôle | Chargement du CSV dans SQLite, vérification du volume (7 043 clients) | Bloc 0 |
+| 2. Nettoyage et enrichissement | `TotalCharges` converti en nombre (11 valeurs vides pour les clients à 0 mois d'ancienneté) ; création des tranches d'ancienneté, du nombre d'options de sécurité et d'un indicateur de churn 0/1 | Bloc 1 (vue `v_clients`) |
+| 3. Indicateurs globaux | Taux de churn, MRR total et MRR perdu | Bloc 2 |
+| 4. Analyse par facteur | Churn par type de contrat, ancienneté, mode de paiement et nombre d'options | Blocs 3 à 6 |
+| 5. Priorisation | Matrice contrat × ancienneté avec le MRR encore actif de chaque segment | Bloc 7 |
 
-## 5. Stack technique
+## 5. Outils
 
-- **Power BI Desktop** : Power Query (nettoyage), DAX (mesures), dashboard
-- **SQL** (SQLite / DB Browser for SQLite, gratuit) : requêtes de segmentation
-- **Python / pandas** (facultatif) : notebook d'exploration commenté ligne à ligne
-- **Excel** : contrôles croisés via tableaux croisés dynamiques
+- **SQL** sur SQLite, avec DB Browser for SQLite : nettoyage, enrichissement et analyse.
+- **Python / pandas** : le notebook `notebooks/01_analyse_churn.ipynb` reproduit la même analyse, pour qui préfère cette approche.
 
 ## 6. Résultats clés
 
@@ -72,15 +69,13 @@ Sous-questions :
 
 **Limites :** il s'agit de corrélations, pas de causalités. Par exemple, les clients équipés de 4 options sont aussi plus souvent engagés sur de longues durées. Un test contrôlé serait nécessaire pour mesurer l'effet propre de chaque levier.
 
-📊 Captures du dashboard : `visuals/`
-
 ## 7. Recommandations business
 
 1. **Convertir les contrats mensuels à l'engagement** — cible prioritaire : les 802 clients mensuels de 25 à 48 mois (38 347 $ de MRR actif, 32,9 % de churn). Ils sont déjà fidèles dans les faits : une offre de bascule vers l'engagement annuel (1 mois offert) peut ramener leur risque vers les 10-11 % observés sur les contrats d'un an.
 2. **Sécuriser les 6 premiers mois** — plus d'un client mensuel récent sur deux part (55,2 %). Mettre en place un parcours d'onboarding : appel de bienvenue à J+7, point d'usage à J+30, revue à J+90 avec une proposition d'engagement.
 3. **Faire des options sécurité/support un levier de rétention** — le churn passe de 56,7 % sans option à 23,8 % avec deux options. Proposer un bundle « sécurité + support » à prix d'appel aux 1 267 clients sans aucune option, avec un argumentaire et une battlecard pour les équipes commerciales.
 4. **Migrer le chèque électronique vers le prélèvement automatique** — 2 365 clients, 45,3 % de churn. Proposer une incitation à l'activation, par exemple une remise sur la première facture.
-5. **Piloter un score de risque mensuel** (contrat × ancienneté × nombre d'options × mode de paiement) dans le dashboard, pour que le Customer Success traite en priorité les comptes à fort MRR et fort risque.
+5. **Piloter un score de risque mensuel** (contrat × ancienneté × nombre d'options × mode de paiement) dans un tableau de bord, pour que le Customer Success traite en priorité les comptes à fort MRR et fort risque.
 
 ## 8. Structure du dépôt
 
@@ -88,16 +83,11 @@ Sous-questions :
 churn-analysis-subscription-services/
 ├── README.md
 ├── data/
-│   └── WA_Fn-UseC_-Telco-Customer-Churn.csv   ← à télécharger (non versionné)
+│   └── WA_Fn-UseC_-Telco-Customer-Churn.csv   à télécharger (non versionné)
 ├── sql/
-│   └── churn_queries.sql                       ← requêtes de segmentation commentées
-├── powerbi/
-│   ├── mesures_dax.md                          ← étapes Power Query + mesures DAX
-│   └── churn_dashboard.pbix                    ← à ajouter
-├── notebooks/
-│   └── 01_analyse_churn.ipynb                  ← option Python, commentée ligne à ligne
-└── visuals/
-    └── (captures du dashboard)
+│   └── churn_queries.sql                       requêtes commentées, blocs 0 à 7
+└── notebooks/
+    └── 01_analyse_churn.ipynb                  même analyse en Python, commentée ligne à ligne
 ```
 
 ---
