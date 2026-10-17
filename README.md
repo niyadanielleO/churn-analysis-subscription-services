@@ -92,4 +92,4 @@ churn-analysis-subscription-services/
 
 ---
 
-**Danielle OUATTARA** · [LinkedIn](https://www.linkedin.com/in/niyadanielleouattara/) · [Mes autres projets](https://github.com/niyadanielleO)
+**Danielle OUATTARA** · [LinkedIn](https://www.linkedin.com/in/ndanielleouattara/) · [Mes autres projets](https://github.com/niyadanielleO)
