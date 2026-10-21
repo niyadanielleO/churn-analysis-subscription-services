@@ -82,6 +82,7 @@ Sous-questions :
 ```
 churn-analysis-subscription-services/
 ├── README.md
+├── requirements.txt
 ├── data/
 │   └── WA_Fn-UseC_-Telco-Customer-Churn.csv   à télécharger (non versionné)
 ├── sql/
@@ -89,6 +90,19 @@ churn-analysis-subscription-services/
 └── notebooks/
     └── 01_analyse_churn.ipynb                  même analyse en Python, commentée ligne à ligne
 ```
+
+## 9. Reproduire l'analyse
+
+```bash
+git clone https://github.com/niyadanielleO/churn-analysis-subscription-services.git
+cd churn-analysis-subscription-services
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+jupyter notebook
+```
+
+Placer ensuite le fichier Kaggle dans `data/` et exécuter le notebook, ou lancer les requêtes de `sql/churn_queries.sql` dans SQLite.
 
 ---
 
