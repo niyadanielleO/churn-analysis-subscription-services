@@ -106,4 +106,4 @@ Placer ensuite le fichier Kaggle dans `data/` et exécuter le notebook, ou lance
 
 ---
 
-**N. Danielle OUATTARA** · [LinkedIn](https://www.linkedin.com/in/ndanielleouattara/) · [Mes autres projets](https://github.com/niyadanielleO)
+**Niya C. Danielle Ouattara** · [LinkedIn](https://www.linkedin.com/in/ndanielleouattara/) · [Mes autres projets](https://github.com/niyadanielleO)

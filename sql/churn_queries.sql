@@ -1,6 +1,6 @@
 -- =====================================================================
 -- Analyse du churn — requêtes SQL (SQLite / DB Browser for SQLite)
--- Auteure : Danielle OUATTARA
+-- Auteure : Niya C. Danielle Ouattara
 -- Table : clients (import du fichier WA_Fn-UseC_-Telco-Customer-Churn.csv)
 -- Import : DB Browser for SQLite > Fichier > Importer > Table depuis un CSV
 --          nom de la table : clients, cocher « Noms de colonnes en 1re ligne »
